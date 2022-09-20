@@ -1,12 +1,14 @@
 import './App.css';
+import Header from './components/Header';
+import Card from './components/Card';
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-       My header
-      </header>
-    </div>
+      {/* Use the component */}
+      <Header />
+      <Card />    
+      </div>
   );
 }
 
