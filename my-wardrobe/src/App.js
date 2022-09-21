@@ -1,6 +1,5 @@
 import './App.css';
 import Header from './components/Header';
-import WardrobeCard from './components/WardrobeCard';
 import Container from './components/Container';
 
 const App = () => {
