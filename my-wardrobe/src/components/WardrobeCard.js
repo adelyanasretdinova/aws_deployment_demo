@@ -8,7 +8,6 @@ const WardrobeCard = (props) => {
         <button className="btn btn-primary" id='T-shirt'  >Add to outfit</button>
       </div>
     </div>
-    <p>{props.fakeProperty}</p>
     </>
   )
 }
