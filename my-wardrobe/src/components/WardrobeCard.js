@@ -1,4 +1,4 @@
-const Card = (props) => {
+const WardrobeCard = (props) => {
   return (
     <>
     <div className="card" style={{ width: "18rem", border: "solid" }}>
@@ -13,4 +13,4 @@ const Card = (props) => {
   )
 }
 
-export default Card
+export default WardrobeCard

@@ -1,6 +1,6 @@
 import './App.css';
 import Header from './components/Header';
-import Card from './components/Card';
+import WardrobeCard from './components/WardrobeCard';
 
 let tshirt = {
   color: 'red with orange dotts',
@@ -46,7 +46,7 @@ const App = () => {
     <div className="App">
       <Header />
       {wardrobe.map((element, index) => {
-        return <Card key={index} item={element} fakeProperty={'some thing!'} />
+        return <WardrobeCard key={index} item={element} />
       })}
       
     
