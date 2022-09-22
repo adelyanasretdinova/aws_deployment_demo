@@ -4,10 +4,9 @@ import { tshirt, socks, shorts } from '../mockData'
 import Outfit from './Outfit'
 
 const Container = () => {
-  // Here we will add state! We use the useState Hook
-  // the data, and a function to change the data:
   const [ wardrobe, setWardrobe ] = useState([ tshirt, shorts, socks ])
   const [outfit, setOutfit ] = useState([])
+
 
   // functions for buttons: 
   const addToOutfit = (event) => {
@@ -19,11 +18,16 @@ const Container = () => {
     // update state
     setOutfit([...outfit, clickedItem])
   }
-
+  const removeFromOutfit = (event) => {
+    let updatedOutfit = outfit.filter(item => {
+      return item.id !== event.target.id
+    })
+    setOutfit(updatedOutfit)
+  }
   return(
   <div className='Container'>
     <Wardrobe wardrobeData={wardrobe} addToOutfit={addToOutfit}/>
-    <Outfit outfitData={outfit}></Outfit>
+    <Outfit outfitData={outfit} removeFromOutfit={removeFromOutfit}></Outfit>
   </div>)
 }
 

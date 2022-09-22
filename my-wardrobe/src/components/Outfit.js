@@ -6,7 +6,7 @@ const Outfit = (props) => {
       <h5>This is your styling for today:</h5>
       <div className="d-flex">
         {props.outfitData.map((element, index) => {
-          return <OutfitCard key={index} item={element} />
+          return <OutfitCard key={index} item={element} removeFromOutfit={props.removeFromOutfit}/>
         })}
       </div>
     </div>
