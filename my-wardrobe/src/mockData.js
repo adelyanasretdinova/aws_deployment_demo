@@ -11,7 +11,8 @@ let tshirt = {
   url: tshirtImg,
   descrShort: 'T-Shirt',
   descrLong: 'A nice cotton T-Shirt', 
-  season: 'all'
+  season: 'all', 
+  id: '01'
 }
 
 let socks = {
@@ -23,7 +24,8 @@ let socks = {
   url: socksImg,
   descrShort: 'Socks',
   descrLong: 'Socks for every day',
-  season: 'all'
+  season: 'all', 
+  id: '02'
 }
 
 let shorts = {
@@ -36,7 +38,8 @@ let shorts = {
   url: shortsImg,
   descrShort: 'Shorts',
   descrLong: 'A pair of demin shorts', 
-  season: 'summer'
+  season: 'summer', 
+  id: '03'
 }
 
 export { tshirt, socks, shorts }
