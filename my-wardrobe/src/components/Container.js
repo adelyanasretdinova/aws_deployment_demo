@@ -36,7 +36,7 @@ const Container = () => {
 
   return(
   <div className='Container'>
-          <div className="Pills">
+          <div className="SeasonButtons">
         {SEASONS.map(element => <button
           className="btn btn-warning m-2 "
           onClick={(event) => {displaySeason(event)}}
@@ -44,7 +44,14 @@ const Container = () => {
           key={element}>
           {element}
         </button>)}
+        <button
+          className="btn btn-secondary m-2 "
+          onClick={(e) => ()}
+          id='reset'
+         >     Reset
+         </button>
       </div>
+
       {/* If there is data in the seasonWardrobe array, this will be passed to wardrobe, if it is empty, the whole wardrobe will be passed. */}
     <Wardrobe wardrobeData={seasonWardrobe.length > 0 ? seasonWardrobe: wardrobe} addToOutfit={addToOutfit}/>
     {/* Add a property to outfit, and check array outfit which text to display */}
