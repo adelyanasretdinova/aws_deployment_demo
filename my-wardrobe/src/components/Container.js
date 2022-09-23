@@ -33,7 +33,7 @@ const Container = () => {
     })
     setSeasonWardrobe(seasonWardrobe)
   }
-  
+
   return(
   <div className='Container'>
           <div className="Pills">
@@ -45,7 +45,8 @@ const Container = () => {
           {element}
         </button>)}
       </div>
-    <Wardrobe wardrobeData={wardrobe} addToOutfit={addToOutfit}/>
+      {/* If there is data in the seasonWardrobe array, this will be passed to wardrobe, if it is empty, the whole wardrobe will be passed. */}
+    <Wardrobe wardrobeData={seasonWardrobe.length > 0 ? seasonWardrobe: wardrobe} addToOutfit={addToOutfit}/>
     {/* Add a property to outfit, and check array outfit which text to display */}
     <Outfit outfitData={outfit} removeFromOutfit={removeFromOutfit} header={ outfit.length > 0 ? "This is your styling for today" : "Select an outfit!"  } />
   </div>)
