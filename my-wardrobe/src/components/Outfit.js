@@ -11,8 +11,14 @@ const Outfit = (props) => {
 
   return (
     <div className="Outfit">
+
+      {/* Option 3: */}
+
+      <h3>{props.header}</h3>
+
+      {/* Option 2 */}
       <h3>{text}</h3>
-      {/* Check length, display different header */}
+      {/* Option 1: Check length, display different header */}
       { (props.outfitData.length > 0) ? ( 
         <h3>This is your styling for today:</h3>
        ) : ( 

@@ -27,7 +27,8 @@ const Container = () => {
   return(
   <div className='Container'>
     <Wardrobe wardrobeData={wardrobe} addToOutfit={addToOutfit}/>
-    <Outfit outfitData={outfit} removeFromOutfit={removeFromOutfit}></Outfit>
+    {/* Add a property to outfit, and check array outfit which text to display */}
+    <Outfit outfitData={outfit} removeFromOutfit={removeFromOutfit} header={ outfit.length > 0 ? "This is your styling for today" : "Select an outfit!"  } />
   </div>)
 }
 
