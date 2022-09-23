@@ -25,12 +25,21 @@ const Container = () => {
     })
     setOutfit(updatedOutfit)
   }
+
+  const displaySeason = (event) => {
+    let seasonWardrobe = wardrobe.filter(item => {
+      // only return items with the season we clicked on!
+      return item.season === event.target.id
+    })
+    setSeasonWardrobe(seasonWardrobe)
+  }
+  
   return(
   <div className='Container'>
           <div className="Pills">
         {SEASONS.map(element => <button
           className="btn btn-warning m-2 "
-          onClick={(e) => {}}
+          onClick={(event) => {displaySeason(event)}}
           id={element}
           key={element}>
           {element}
