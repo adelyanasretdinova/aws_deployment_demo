@@ -7,6 +7,7 @@ const Container = () => {
   const [ wardrobe, setWardrobe ] = useState([ tshirt, shorts, socks,  pullover, jacket, pants, winterPullover ])
   const [outfit, setOutfit ] = useState([])
   const [ seasonWardrobe, setSeasonWardrobe] = useState([])
+  const SEASONS = ['summer', 'fall', 'winter', 'spring']
 
   // functions for buttons: 
   const addToOutfit = (event) => {
@@ -26,6 +27,15 @@ const Container = () => {
   }
   return(
   <div className='Container'>
+          <div className="Pills">
+        {SEASONS.map(element => <button
+          className="btn btn-warning m-2 "
+          onClick={(e) => {}}
+          id={element}
+          key={element}>
+          {element}
+        </button>)}
+      </div>
     <Wardrobe wardrobeData={wardrobe} addToOutfit={addToOutfit}/>
     {/* Add a property to outfit, and check array outfit which text to display */}
     <Outfit outfitData={outfit} removeFromOutfit={removeFromOutfit} header={ outfit.length > 0 ? "This is your styling for today" : "Select an outfit!"  } />
