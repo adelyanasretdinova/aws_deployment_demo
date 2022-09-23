@@ -24,7 +24,7 @@ const Outfit = (props) => {
        ) : ( 
           <h3> Select an outfit! </h3> )
       } 
-      <div className="d-flex">
+      <div className="d-flex flex-wrap justify-content-center">
         {props.outfitData.map((element, index) => {
           return <OutfitCard key={index} item={element} removeFromOutfit={props.removeFromOutfit}/>
         })}
