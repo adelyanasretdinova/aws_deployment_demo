@@ -34,6 +34,11 @@ const Container = () => {
     setSeasonWardrobe(seasonWardrobe)
   }
 
+  const resetSeason = () => {
+    // when we empty this array, the wardrobe component will automatically display the wardrobe state againg.
+    setSeasonWardrobe([])
+   }
+
   return(
   <div className='Container'>
           <div className="SeasonButtons">
@@ -46,7 +51,7 @@ const Container = () => {
         </button>)}
         <button
           className="btn btn-secondary m-2 "
-          onClick={(e) => ()}
+          onClick={()=> {resetSeason()}}
           id='reset'
          >     Reset
          </button>
