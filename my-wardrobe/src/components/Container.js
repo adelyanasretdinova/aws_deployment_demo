@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import Wardrobe from "./Wardrobe"
-import { tshirt, socks, shorts } from '../mockData'
+import { tshirt, socks, shorts,  pullover, jacket, pants, winterPullover } from '../mockData'
 import Outfit from './Outfit'
 
 const Container = () => {
-  const [ wardrobe, setWardrobe ] = useState([ tshirt, shorts, socks ])
+  const [ wardrobe, setWardrobe ] = useState([ tshirt, shorts, socks,  pullover, jacket, pants, winterPullover ])
   const [outfit, setOutfit ] = useState([])
-
+  const [ seasonWardrobe, setSeasonWardrobe] = useState([])
 
   // functions for buttons: 
   const addToOutfit = (event) => {
