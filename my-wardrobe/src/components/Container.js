@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Wardrobe from "./Wardrobe"
 import { tshirt, socks, shorts,  pullover, jacket, pants, winterPullover } from '../mockData'
 import Outfit from './Outfit'
@@ -8,6 +8,18 @@ const Container = () => {
   const [outfit, setOutfit ] = useState([])
   const [ seasonWardrobe, setSeasonWardrobe] = useState([])
   const SEASONS = ['summer', 'fall', 'winter', 'spring']
+
+  useEffect(() => {
+    // do something
+    // fetch data
+    let path = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Berlin?unitGroup=metric&key=${process.env.REACT_APP_VISUAL_KEY}&contentType=json`
+    // add mode cors to avoid blocking of request
+    fetch(path, { mode: 'cors' })
+    // format data (create a new object)
+    // add to state (as an object)
+    // don't forget to catch errors!
+    console.log('page loaded');
+  }, [])
 
   // functions for buttons: 
   const addToOutfit = (event) => {
