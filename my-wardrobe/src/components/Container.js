@@ -23,10 +23,11 @@ const Container = () => {
 
       // Get the pices of data I want to put into state: 
       let city = data.address;
+      let temperature = data.currentConditions.temp;
       let conditions = data.currentConditions.conditions
       // format conditions, just to remove the capital letters 
       conditions = conditions.split(' ').map(word => word.toLowerCase()).join(' ')
-      let temperature = data.currentConditions.temp;
+
       // create a new object with only the data I need: 
       let myWeatherData = { city, conditions, temperature }
       // store the new object in the variable weather in state
