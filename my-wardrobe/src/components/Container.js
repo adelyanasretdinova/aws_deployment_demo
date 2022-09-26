@@ -25,10 +25,7 @@ const Container = () => {
   const addToOutfit = (event) => {
     let id = event.target.id
     console.log("ID of item", id);
-    // find the item in the wardrobe array
     let clickedItem = wardrobe.find(item => item.id === id)
-    // add to outfit array
-    // update state
     setOutfit([...outfit, clickedItem])
   }
   const removeFromOutfit = (event) => {
@@ -40,14 +37,12 @@ const Container = () => {
 
   const displaySeason = (event) => {
     let seasonWardrobe = wardrobe.filter(item => {
-      // only return items with the season we clicked on!
       return item.season === event.target.id
     })
     setSeasonWardrobe(seasonWardrobe)
   }
 
   const resetSeason = () => {
-    // when we empty this array, the wardrobe component will automatically display the wardrobe state againg.
     setSeasonWardrobe([])
    }
 
@@ -68,10 +63,7 @@ const Container = () => {
          >     Reset
          </button>
       </div>
-
-      {/* If there is data in the seasonWardrobe array, this will be passed to wardrobe, if it is empty, the whole wardrobe will be passed. */}
     <Wardrobe wardrobeData={seasonWardrobe.length > 0 ? seasonWardrobe: wardrobe} addToOutfit={addToOutfit}/>
-    {/* Add a property to outfit, and check array outfit which text to display */}
     <Outfit outfitData={outfit} removeFromOutfit={removeFromOutfit} header={ outfit.length > 0 ? "This is your styling for today" : "Select an outfit!"  } />
   </div>)
 }
