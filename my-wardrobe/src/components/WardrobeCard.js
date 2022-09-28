@@ -1,6 +1,6 @@
 const WardrobeCard = (props) => {
   return (
-    <div className="Wardrobecard card m-2" style={{ width: "18rem", border: "solid" }}>
+    <div className="Wardrobecard card m-2 w-25" style={{ border: "solid" }}>
       <img src={props.item.url} className="card-img-top h-50" alt={props.item.descrShort} />
       <div className="card-body">
         <h5 className="card-title">{props.item.descrShort}</h5>
