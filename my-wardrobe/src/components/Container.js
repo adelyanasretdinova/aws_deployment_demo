@@ -31,7 +31,7 @@ const Container = () => {
         console.log("There was an error when fetching data", error);
       }
     }
-    fetchData()
+    // fetchData()
 
     let outfitJson = localStorage.getItem('outfitLS')
     let outfitParsed = JSON.parse(outfitJson)
