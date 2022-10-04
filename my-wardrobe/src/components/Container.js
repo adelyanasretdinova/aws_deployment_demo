@@ -1,18 +1,39 @@
 import { useState, useEffect } from 'react'
 import Wardrobe from "./Wardrobe"
-import { tshirt, socks, shorts, pullover, jacket, pants, winterPullover } from '../mockData'
 import Outfit from './Outfit'
 import Weather from './Weather'
 import SeasonButtons from './SeasonButtons'
 
 const Container = () => {
-  const [wardrobe, setWardrobe] = useState([tshirt, shorts, socks, pullover, jacket, pants, winterPullover])
+  const [wardrobe, setWardrobe] = useState([])
   const [outfit, setOutfit] = useState([])
   const [seasonWardrobe, setSeasonWardrobe] = useState([])
   const [weather, setWeather] = useState({})
   const SEASONS = ['summer', 'fall', 'winter', 'spring']
 
   useEffect(() => {
+    const fetchWardrobe = async () => {
+      try{
+      // fetch
+      let path = 'http://localhost:8000/wardrobe'
+      let response = await fetch(path, { mode: 'cors' })
+      // inspect the data
+      let fetchedWardrobeData = await response.json()
+      // console.log(fetchedWardrobeData.data)
+      // each item: Change url of image to `http://localhost:8000/images/tshirt.jpg`
+        let dataToStore = fetchedWardrobeData.data.map(item => {
+          return {...item, url: `http://localhost:8000${item.url}` }
+        })
+      // save data to state
+        setWardrobe(dataToStore)
+
+      } catch(error) {
+        console.log('Something went wrong fetching data', error);
+      }
+      
+    }
+    fetchWardrobe()
+
     const fetchData = async () => {
       try {
         let path = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Berlin?unitGroup=metric&key=${process.env.REACT_APP_VISUAL_KEY}&contentType=json`
@@ -33,6 +54,7 @@ const Container = () => {
     }
     
     fetchData()
+    // fetch data from the backend and pass to state!
 
     let outfitJson = localStorage.getItem('outfitLS')
     let outfitParsed = JSON.parse(outfitJson)
