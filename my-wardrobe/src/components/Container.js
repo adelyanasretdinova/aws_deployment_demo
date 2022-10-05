@@ -9,17 +9,27 @@ const Container = () => {
   const [outfit, setOutfit] = useState([])
   const [seasonWardrobe, setSeasonWardrobe] = useState([])
   const [weather, setWeather] = useState({})
+  const [error, setError] = useState(null)
   const SEASONS = ['summer', 'fall', 'winter', 'spring']
 
   const fetchWardrobe = async () => {
-    try{
-    let path = `${process.env.REACT_APP_WARDROBE_API}/wardrobe`
-    let response = await fetch(path, { mode: 'cors' })
-    let fetchedWardrobeData = await response.json()
-    let dataToStore = fetchedWardrobeData.data.map(item => ({...item, url: `http://localhost:8000${item.url}`}))
-    setWardrobe(dataToStore)
-    } catch(error) {
-      console.log('Something went wrong fetching data', error);
+    try {
+      let path = `${process.env.REACT_APP_WARDROBE_API}/wardrobe`
+      let response = await fetch(path, { mode: 'cors' })
+      // check status 
+      // if 200 
+      if (response.status === 200) {
+        let fetchedWardrobeData = await response.json()
+        let dataToStore = fetchedWardrobeData.data.map(item => ({ ...item, url: `http://localhost:8000${item.url}` }))
+        setWardrobe(dataToStore)
+      } else {
+        // deal with error
+        throw new Error(`Sorry, could not find any data`)
+        throw new Error(`Could not find: ${response.url}`)
+      }
+    } catch (error) {
+      console.log('Something went wrong fetching data', error.message);
+      setError(error.message)
     }
   }
 
@@ -45,7 +55,7 @@ const Container = () => {
     if (outfitParsed) {
       setOutfit(outfitParsed)
     }
-  }  
+  }
 
   const saveDataToLS = () => {
     localStorage.setItem('outfitLS', JSON.stringify(outfit))
@@ -67,7 +77,7 @@ const Container = () => {
     setOutfit([...outfit, clickedItem])
   }
   const removeFromOutfit = (event) => {
-    let updatedOutfit = outfit.filter(item =>item.id !== event.target.id)
+    let updatedOutfit = outfit.filter(item => item.id !== event.target.id)
     setOutfit(updatedOutfit)
   }
 
@@ -83,9 +93,15 @@ const Container = () => {
   return (
     <div className='Container'>
       <Weather weatherData={weather} />
-      <SeasonButtons seasons={SEASONS} displaySeason={displaySeason} resetSeason={resetSeason} />
-      <Wardrobe wardrobeData={seasonWardrobe.length > 0 ? seasonWardrobe : wardrobe} addToOutfit={addToOutfit} />
-      <Outfit outfitData={outfit} removeFromOutfit={removeFromOutfit} />
+    
+      {/* Add a condition for error and display the message (component) */}
+      {error ? (<h2>{error}</h2>) : (
+        <>
+          <SeasonButtons seasons={SEASONS} displaySeason={displaySeason} resetSeason={resetSeason} />
+          <Wardrobe wardrobeData={seasonWardrobe.length > 0 ? seasonWardrobe : wardrobe} addToOutfit={addToOutfit} />
+          <Outfit outfitData={outfit} removeFromOutfit={removeFromOutfit} />
+        </>
+      )}
     </div>)
 }
 
