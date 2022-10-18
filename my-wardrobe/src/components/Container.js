@@ -122,7 +122,84 @@ const Container = () => {
   const resetSeason = () => {
     setSeasonWardrobe([]);
   };
+  // function to upload image:
+  const uploadImageToCloudinary = async (item) => {
+    console.log("upload image start");
+    // setup
+    let preset = "wardrobe_beam";
+    let cloudName = "ddebnabwu";
+    let cloudPath = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+    // create body to post:
+    let dataForBody = new FormData();
+    dataForBody.append("file", item.url[0]);
+    dataForBody.append("upload_preset", preset);
+    dataForBody.append("cloud_name", cloudName);
 
+    // fetch Post image to cloudinary
+    try {
+      let responseFromCloud = await fetch(cloudPath, {
+        method: "POST",
+        body: dataForBody,
+      });
+      let imageData = await responseFromCloud.json();
+      console.log("post to cloud", imageData);
+      return imageData;
+    } catch (error) {
+      console.log(error);
+      setError(error.message);
+    }
+  };
+
+  const updateWardrobe = async (updatedItem, id, uploadImage) => {
+    let imageUrl = "";
+    console.log("container updated Item", updatedItem, uploadImage);
+    // upload image to cloudinary: ONLY if the is a changed image
+    if (uploadImage) {
+      let resultFromImageUpload = await uploadImageToCloudinary(updatedItem);
+      imageUrl = resultFromImageUpload.url;
+    } else {
+      imageUrl = updatedItem.url;
+    }
+
+    // change the state
+    // add new values and url to state of the item
+    let updatedWardrobe = wardrobe.map((item) => {
+      if (item.id === id) {
+        return { ...item, ...updatedItem, url: imageUrl };
+      } else {
+        return item;
+      }
+    });
+
+    // update wardrobe with updated item!
+    setWardrobe(updatedWardrobe);
+
+    // find the item to update in state using the id
+    let updatedItemInState = updatedWardrobe.find((item) => item.id === id);
+
+    // update to db:
+    try {
+      let path = `${process.env.REACT_APP_WARDROBE_API}/wardrobe/${updatedItemInState.id}`;
+      let response = await fetch(path, {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(updatedItemInState),
+      });
+      console.log("response from fetch", response);
+      if (response.status === 201) {
+        alert("item updated");
+      } else {
+        let error = new Error(`${response.statusText}: ${response.url}`);
+        error.status = response.status;
+        throw error;
+      }
+    } catch (error) {
+      console.log("There was an error when updating data", error);
+      setError(error.message);
+    }
+  };
   return (
     <div className="Container">
       <Weather weatherData={weather} />
@@ -141,6 +218,7 @@ const Container = () => {
             wardrobeData={seasonWardrobe.length > 0 ? seasonWardrobe : wardrobe}
             addToOutfit={addToOutfit}
             deleteItem={deleteItem}
+            updateWardrobe={updateWardrobe}
           />
           <Outfit outfitData={outfit} removeFromOutfit={removeFromOutfit} />
         </>

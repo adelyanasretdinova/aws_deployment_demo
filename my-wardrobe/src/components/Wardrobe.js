@@ -10,6 +10,7 @@ const Wardrobe = (props) => {
             item={element}
             addToOutfit={props.addToOutfit}
             deleteItem={props.deleteItem}
+            updateWardrobe={props.updateWardrobe}
           />
         );
       })}
