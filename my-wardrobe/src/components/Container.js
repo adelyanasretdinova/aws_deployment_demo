@@ -156,6 +156,7 @@ const Container = () => {
     // upload image to cloudinary: ONLY if the is a changed image
     if (uploadImage) {
       let resultFromImageUpload = await uploadImageToCloudinary(updatedItem);
+      console.log("test", uploadImageToCloudinary);
       imageUrl = resultFromImageUpload.url;
     } else {
       imageUrl = updatedItem.url;

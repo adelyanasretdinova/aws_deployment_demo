@@ -3,22 +3,21 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { useFormik } from "formik";
 
 const WardrobeCard = (props) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [titleInput, setTitleInput] = useState("");
-  const [descriptionInput, setdescriptionInput] = useState("");
-  const [season, setSeason] = useState("");
-  const [price, setPrice] = useState("");
+  // const [titleInput, setTitleInput] = useState("");
+  // const [descriptionInput, setdescriptionInput] = useState("");
+  // const [season, setSeason] = useState("");
+  // const [price, setPrice] = useState("");
   const EditingCard = Yup.object().shape({
     descrshort: Yup.string()
       .min(2, "Too Short!")
       .max(20, "Too Long!")
       .required("Required"),
-    price: Yup.number().min(1).max(10).required("Required"),
+    price: Yup.number().min(1).max(100).required("Required"),
     descrlong: Yup.string()
       .min(10, "Too Short!")
       .max(500, "Too Long!")
@@ -26,6 +25,7 @@ const WardrobeCard = (props) => {
     season: Yup.string()
       .oneOf(["spring", "summer", "fall", "winter"])
       .required("Required"),
+    url: Yup.string().required("Required"),
   });
 
   return (
@@ -82,18 +82,17 @@ const WardrobeCard = (props) => {
               onSubmit={(values) => {
                 // same shape as initial values
                 console.log(values);
-                props.updateWardrobe(values, props.item.id);
-                props.handleClose();
+                let changedUrl = false;
+                if (values.url !== props.item.url) {
+                  changedUrl = true;
+                }
+                props.updateWardrobe(values, props.item.id, changedUrl);
+                handleClose();
               }}
             >
-              {({ errors, touched, setFieldValue, on }) => (
+              {({ errors, touched, setFieldValue, handleSubmit }) => (
                 <Modal.Body>
-                  <Form
-                  // onSubmit={(event) => {
-                  //   event.preventDefault();
-                  //   console.log("button in form clicked");
-                  // }}
-                  >
+                  <Form onSubmit={handleSubmit}>
                     <label htmlFor="descrshort"> Title of item </label>
                     <Field
                       id="descrshort"
