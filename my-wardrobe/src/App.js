@@ -4,6 +4,7 @@ import "./App.css";
 import Header from "./components/Header";
 import Container from "./components/Container";
 import NewItem from "./components/NewItem";
+import Registration from "./components/Registration";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           />
           <Route path="*" element={<div> Page not found</div>} />
           <Route path="/newItem" element={<NewItem />} />
+          <Route path="/registration" element={<Registration />} />
         </Routes>
       </div>
     </BrowserRouter>

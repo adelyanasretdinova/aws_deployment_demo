@@ -24,6 +24,12 @@ const Header = () => {
               Create new item
             </Link>
           </li>
+          <li className="nav-item">
+            {" "}
+            <Link to="/registration" className="nav-link">
+              Sign Up
+            </Link>
+          </li>
         </ul>
       </nav>
     </header>
