@@ -22,7 +22,7 @@ const Registration = () => {
         body: JSON.stringify(userInfo),
       });
       console.log("response from fetch", response);
-      if (response.status === 201) {
+      if (response.status === 200) {
         alert("item updated");
       } else {
         let error = new Error(`${response.statusText}: ${response.url}`);

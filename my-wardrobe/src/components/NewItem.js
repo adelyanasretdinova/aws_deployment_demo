@@ -110,6 +110,10 @@ const NewItem = () => {
             descrlong: "",
             price: "",
             season: "",
+            currency: "",
+            color: "",
+            size: "",
+            material: "",
           }}
           validationSchema={EditingCard}
           onSubmit={(values) => {
@@ -154,17 +158,16 @@ const NewItem = () => {
                   id="season"
                   name="season"
                   placeholder="season"
+                  // value="-- select an option --"
                 >
-                  <option disabled="disabled" selected={true}>
-                    -- select an option --
-                  </option>
+                  <option disabled="disabled">-- select an option --</option>
                   <option>Winter</option>
                   <option>Autumn</option>
                   <option>Summer</option>
                   <option>Spring</option>
                 </select>{" "}
                 {errors.season && touched.season && (
-                  <div className="text-danger">{errors.descrlong}</div>
+                  <div className="text-danger">{errors.season}</div>
                 )}
                 <br></br>
                 <label htmlFor="price"> Price</label>
@@ -190,15 +193,13 @@ const NewItem = () => {
                   name="currency"
                   placeholder="currency"
                 >
-                  {/* <option disabled selected value>
-                    -- select an option --
-                  </option> */}
+                  <option disabled="disabled">-- select an option --</option>
                   <option>EUR</option>
                   <option>USD</option>
                   <option>GBP</option>
                 </select>
-                {errors.season && touched.season && (
-                  <div className="text-danger">{errors.descrlong}</div>
+                {errors.currency && touched.currency && (
+                  <div className="text-danger">{errors.currency}</div>
                 )}
                 <br></br>
                 {/* <div className="imageupload"> */}
@@ -213,10 +214,10 @@ const NewItem = () => {
                   // not prefiled, should display placeholder text before typing:
                   // value={descriptionInput}
                 />
-                <br></br>
-                {errors.descrlong && touched.descrlong && (
-                  <div className="text-danger">{errors.descrlong}</div>
+                {errors.color && touched.color && (
+                  <div className="text-danger">{errors.color}</div>
                 )}
+                <br></br>
                 <label htmlFor="size"> Size </label>
                 <Field
                   id="size"
@@ -228,6 +229,9 @@ const NewItem = () => {
                   // not prefiled, should display placeholder text before typing:
                   // value={descriptionInput}
                 />
+                {errors.size && touched.size && (
+                  <div className="text-danger">{errors.size}</div>
+                )}
                 <br></br>
                 <label htmlFor="material"> Material </label>
                 <select
@@ -236,9 +240,7 @@ const NewItem = () => {
                   name="material"
                   placeholder="specify material here"
                 >
-                  {/* <option disabled selected value>
-                    -- select an option --
-                  </option> */}
+                  <option disabled="disabled">-- select an option --</option>
                   <option>Cotton</option>
                   <option>Nylon</option>
                   <option>Jersey</option>
@@ -246,8 +248,8 @@ const NewItem = () => {
                   <option>Cord</option>
                   <option>Wool</option>
                 </select>
-                {errors.season && touched.season && (
-                  <div className="text-danger">{errors.descrlong}</div>
+                {errors.material && touched.material && (
+                  <div className="text-danger">{errors.material}</div>
                 )}
                 <br></br>
                 <label htmlFor="url">Change image</label>
