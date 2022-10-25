@@ -22,7 +22,9 @@ const Container = () => {
         let fetchedWardrobeData = await response.json();
         let dataToStore = fetchedWardrobeData.data.map((item) => ({
           ...item,
-          url: `http://localhost:8000${item.url}`,
+          url: item.url.startsWith("http")
+            ? item.url
+            : `http://localhost:8000${item.url}`,
         }));
         setWardrobe(dataToStore);
       } else {
