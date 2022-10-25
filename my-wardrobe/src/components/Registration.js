@@ -59,35 +59,32 @@ const Registration = () => {
     >
       {({ errors, touched, handleSubmit }) => (
         <Form
-          className="Form d-flex justify-content-center"
+          className="Form d-flex justify-content-center m-5"
           onSubmit={handleSubmit}
         >
-          <div className="registrationForm d-flex flex-column w-50 p-3">
+          <div className="registrationForm d-flex flex-column m-5 gap-3">
+            <h3> Registration</h3>
             <div className="mb-3">
-              <label htmlFor="username" className="form-label">
-                Username
-              </label>
               <Field
                 type="text"
                 className="form-control"
                 id="username"
                 name="username"
                 aria-describedby="username"
+                placeholder="Username"
               />
               {touched.username && errors.username && (
                 <div className="text-danger">{errors.username}</div>
               )}
             </div>
             <div className="mb-3">
-              <label htmlFor="exampleInputEmail1" className="form-label">
-                Email address
-              </label>
               <Field
                 type="email"
                 className="form-control"
                 id="email"
                 name="email"
                 aria-describedby="emailHelp"
+                placeholder="Email"
               />
               <div id="emailHelp" className="form-text">
                 We'll never share your email with anyone else.
@@ -97,14 +94,12 @@ const Registration = () => {
               )}
             </div>
             <div className="mb-3">
-              <label htmlFor="exampleInputPassword1" className="form-label">
-                Password
-              </label>
               <Field
                 type="password"
                 className="form-control"
                 id="password"
                 name="password"
+                placeholder="Password"
               />
               {errors.password && touched.password && (
                 <div className="text-danger">{errors.password}</div>

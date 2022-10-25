@@ -3,12 +3,14 @@ import Button from "react-bootstrap/Button";
 import { Formik, Form, Field } from "formik";
 import Modal from "react-bootstrap/Modal";
 import * as Yup from "yup";
+import { Link } from "react-router-dom";
 
 const NewItem = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [error, setError] = useState(null);
+  const [messageUpload, setMessageUpload] = useState(false);
 
   const EditingCard = Yup.object().shape({
     descrshort: Yup.string()
@@ -21,7 +23,7 @@ const NewItem = () => {
       .max(500, "Too Long!")
       .required("Required"),
     season: Yup.string()
-      .oneOf(["spring", "summer", "fall", "winter"])
+      .oneOf(["Spring", "Summer", "Autumn", "Winter"])
       .required("Required"),
     url: Yup.string().required("Required"),
     currency: Yup.string().oneOf(["EUR", "USD", "GBP"]).required("Required"),
@@ -71,18 +73,22 @@ const NewItem = () => {
 
     let updatedItemList = { ...addedItem, url: imageUrl };
 
+    // get access to token in local storage:
+    let tokenFromLS = localStorage.getItem("token");
+    let JWT_TOKEN = JSON.parse(tokenFromLS);
+    let path = `${process.env.REACT_APP_WARDROBE_API}/wardrobe`;
     try {
-      let path = `${process.env.REACT_APP_WARDROBE_API}/wardrobe`;
       let response = await fetch(path, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
+          Authorization: `Bearer ${JWT_TOKEN}`,
         },
         body: JSON.stringify(updatedItemList),
       });
       console.log("response from fetch", response);
       if (response.status === 201) {
-        alert("item updated");
+        setMessageUpload(response.statusText);
       } else {
         let error = new Error(`${response.statusText}: ${response.url}`);
         error.status = response.status;
@@ -95,7 +101,7 @@ const NewItem = () => {
   };
 
   return (
-    <div className="newItem">
+    <div className="newItem d-flex flex-column align-self-center">
       <Button variant="primary" onClick={handleShow}>
         Add new Item to your wardrobe
       </Button>
@@ -153,7 +159,8 @@ const NewItem = () => {
                   <div className="text-danger">{errors.descrlong}</div>
                 )}
                 <label htmlFor="season"> Season </label>
-                <select
+                <Field
+                  as="select"
                   className="form-control"
                   id="season"
                   name="season"
@@ -165,7 +172,7 @@ const NewItem = () => {
                   <option>Autumn</option>
                   <option>Summer</option>
                   <option>Spring</option>
-                </select>{" "}
+                </Field>
                 {errors.season && touched.season && (
                   <div className="text-danger">{errors.season}</div>
                 )}
@@ -187,7 +194,8 @@ const NewItem = () => {
                 )}
                 <br></br>
                 <label htmlFor="currency"> Currency </label>
-                <select
+                <Field
+                  as="select"
                   className="form-control"
                   id="currency"
                   name="currency"
@@ -197,7 +205,7 @@ const NewItem = () => {
                   <option>EUR</option>
                   <option>USD</option>
                   <option>GBP</option>
-                </select>
+                </Field>
                 {errors.currency && touched.currency && (
                   <div className="text-danger">{errors.currency}</div>
                 )}
@@ -234,7 +242,8 @@ const NewItem = () => {
                 )}
                 <br></br>
                 <label htmlFor="material"> Material </label>
-                <select
+                <Field
+                  as="select"
                   className="form-control"
                   id="material"
                   name="material"
@@ -247,7 +256,7 @@ const NewItem = () => {
                   <option>Polyester</option>
                   <option>Cord</option>
                   <option>Wool</option>
-                </select>
+                </Field>
                 {errors.material && touched.material && (
                   <div className="text-danger">{errors.material}</div>
                 )}
@@ -279,6 +288,12 @@ const NewItem = () => {
           )}
         </Formik>
       </Modal>
+      {messageUpload ? (
+        <>
+          <h2>{messageUpload} </h2>
+          <Link to="/"> Go back to main page</Link>
+        </>
+      ) : null}
     </div>
   );
 };

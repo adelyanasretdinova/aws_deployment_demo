@@ -1,18 +1,25 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import "./App.css";
 import Header from "./components/Header";
 import Container from "./components/Container";
 import NewItem from "./components/NewItem";
 import Registration from "./components/Registration";
+import Login from "./components/Login";
+import { useState } from "react";
 
 const App = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
   return (
     <BrowserRouter>
       <div className="App">
         <Header />
         <Routes>
-          <Route path="/" element={<Container />} />
+          {loggedIn ? (
+            <Route path="/" element={<Container />} />
+          ) : (
+            <Route path="/" element={<Navigate to="/registration" replace />} />
+          )}
           <Route
             path="/about"
             element={
@@ -21,8 +28,12 @@ const App = () => {
               </div>
             }
           />
+          <Route
+            path="/newItem"
+            element={<NewItem setLoggedIn={setLoggedIn} />}
+          />
           <Route path="*" element={<div> Page not found</div>} />
-          <Route path="/newItem" element={<NewItem />} />
+          <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
           <Route path="/registration" element={<Registration />} />
         </Routes>
       </div>
