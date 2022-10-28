@@ -3,8 +3,10 @@ import Wardrobe from "./Wardrobe";
 import Outfit from "./Outfit";
 import Weather from "./Weather";
 import SeasonButtons from "./SeasonButtons";
+let tokenFromLS = localStorage.getItem("token");
+let JWT_TOKEN = JSON.parse(tokenFromLS);
 
-const Container = () => {
+const Container = (props) => {
   const [wardrobe, setWardrobe] = useState([]);
   const [outfit, setOutfit] = useState([]);
   const [seasonWardrobe, setSeasonWardrobe] = useState([]);
@@ -187,6 +189,7 @@ const Container = () => {
         method: "PUT",
         headers: {
           "Content-type": "application/json",
+          Authorization: `Bearer ${JWT_TOKEN}`,
         },
         body: JSON.stringify(updatedItemInState),
       });
@@ -196,6 +199,8 @@ const Container = () => {
       } else {
         let error = new Error(`${response.statusText}: ${response.url}`);
         error.status = response.status;
+        localStorage.removeItem("token");
+        props.setLoggedIn(false);
         throw error;
       }
     } catch (error) {
