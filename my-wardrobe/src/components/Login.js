@@ -34,8 +34,8 @@ const Login = (props) => {
         throw error;
       }
     } catch (error) {
-      console.log("There was an error when loging in user", error);
-      setError({ message: "There was an error when loging in" });
+      console.log("There was an error when logging in user", error);
+      setError({ message: "There was an error when logging in" });
     }
   };
   return (
@@ -57,14 +57,18 @@ const Login = (props) => {
         <Form className="Form d-flex flex-column m-5">
           <h3> Log in </h3>
           <div className="d-flex flex-column m-5 gap-3">
+          <label htmlFor="email">Email</label>
             <Field
+              id= "email"
               name="email"
               type="email"
               placeholder="Email"
               className="form-control"
             />
             <ErrorMessage name="email" />
+            <label htmlFor="password">Password</label>
             <Field
+              id = "password"
               name="password"
               type="password"
               placeholder="Password"
