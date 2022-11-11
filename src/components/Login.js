@@ -85,7 +85,7 @@ const Login = (props) => {
           </div>
         </Form>
       </Formik>
-      {message ? <div>{message}</div> : null}
+      {message ? <div className="login_message">{messageSignup}</div>>{message}</div> : null}
       {error ? <div>{error.message}</div> : null}
     </div>
   );

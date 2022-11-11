@@ -18,7 +18,19 @@ test("display a signup page for a not logged in user", async ({ page }) => {
 
   // loging created
 
-  await expect(page.locator(".login")).toHaveText("Log in");
-  const logLink = page.get;
+  const navbarLogin = page.getByRole("link", { name: "Login" });
+
+  await navbarLogin.click();
+
+  await page.getByLabel("email").fill("ade@gmail.com");
+  await page.getByLabel("password").fill("ABC123!ab");
+
+  await page.locator("button", { type: /submit/i }).click();
+  await expect(page.locator(".login_message")).toHaveText("You are logged in!");
   //navigate to main page
+
+  const navbarMain = page.getByRole("link", { name: "Main Page Wardrobe" });
+
+  // Click the logging link
+  await navbarMain.click();
 });
