@@ -23,7 +23,7 @@ const Registration = () => {
       });
       console.log("response from fetch", response);
       if (response.status === 200) {
-        alert("item updated");
+        alert("you are registered");
       } else {
         let error = new Error(`${response.statusText}: ${response.url}`);
         error.status = response.status;

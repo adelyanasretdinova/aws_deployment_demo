@@ -28,7 +28,7 @@ const handlers = [
       ctx.status(201),
       ctx.json({
         success: true,
-        message: "Item was added",
+        message: "User is registered",
         token: "the token",
       })
     )
