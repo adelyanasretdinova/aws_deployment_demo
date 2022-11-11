@@ -9,11 +9,9 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
-const setRegisteredIn = jest.fn();
-
 describe("Registration", () => {
   test("renders the form", () => {
-    render(<Registration setLoggedIn={setRegisteredIn} />);
+    render(<Registration />);
     // elements are present using the lable
     const inputUserName = screen.getByLabelText(/username/i);
     expect(inputUserName).toBeInTheDocument();
@@ -24,6 +22,7 @@ describe("Registration", () => {
     const button = screen.getByRole("button");
     expect(button).toBeInTheDocument();
   });
+
   test("displays text for ok login", async () => {
     let pathRegistration = `${process.env.REACT_APP_WARDROBE_API}/users`;
 
@@ -42,14 +41,32 @@ describe("Registration", () => {
     expect(await screen.findByText("You are logged in!")).toBeInTheDocument();
   });
 
-  test("displays error when signup doestn work", async () => {
-    render(<Registration />);
+  test("displays error when signup does not work", async () => {
+    // mock a 500 response
+    let pathSignup = `${process.env.REACT_APP_WARDROBE_API}/users/`;
+    server.use(
+      rest.post(pathSignup, (req, res, ctx) => {
+        // body/json is optional for this test
+        return res(
+          ctx.status(500),
+          ctx.json({
+            success: false,
+            errors: "could not sign up",
+          })
+        );
+      })
+    );
+    render(<Signup />);
     // fill out form:
     await userEvent.type(screen.getByLabelText(/username/i), "Tester");
+    await userEvent.type(screen.getByLabelText(/email/i), "test@mail.com");
     await userEvent.type(screen.getByLabelText(/password/i), "ABC123abc!");
-    await userEvent.type(screen.getByLabelText(/email/i), "email@gmail.com");
     await userEvent.click(screen.getByRole("button"));
     // check if we see the text
-    expect(await screen.findByText("Created")).toBeInTheDocument();
+
+    expect(
+      await screen.findByText("There was an error signing up")
+    ).toBeInTheDocument();
+    expect(screen.queryByText("Created")).not.toBeInTheDocument();
   });
 });

@@ -8,12 +8,12 @@ YupPassword(Yup);
 
 const Registration = () => {
   const [error, setError] = useState(null);
+  const [messageSignup, setMessageSignup] = useState();
 
   const registration = async (newUser) => {
     let userInfo = { ...newUser };
-
+    let path = `${process.env.REACT_APP_WARDROBE_API}/users`;
     try {
-      let path = `${process.env.REACT_APP_WARDROBE_API}/users`;
       let response = await fetch(path, {
         method: "POST",
         headers: {
@@ -45,70 +45,71 @@ const Registration = () => {
   });
 
   return (
-    <Formik
-      initialValues={{
-        username: "",
-        email: "",
-        password: "",
-      }}
-      validationSchema={EditingCard}
-      onSubmit={(values) => {
-        console.log(values);
-        registration(values);
-      }}
-    >
-      {({ errors, touched, handleSubmit }) => (
-        <Form
-          className="Form d-flex justify-content-center m-5"
-          onSubmit={handleSubmit}
-        >
-          <div className="registrationForm d-flex flex-column m-5 gap-3">
-            <h3> Registration</h3>
-            <div className="mb-3">
-              <label htmlFor="username">Username</label>
-              <Field
-                type="text"
-                className="form-control"
-                id="username"
-                name="username"
-                aria-describedby="username"
-                placeholder="Username"
-              />
-              {touched.username && errors.username && (
-                <div className="text-danger">{errors.username}</div>
-              )}
-            </div>
-            <div className="mb-3">
-              <label htmlFor="email">Email</label>
-              <Field
-                type="email"
-                className="form-control"
-                id="email"
-                name="email"
-                aria-describedby="emailHelp"
-                placeholder="Email"
-              />
-              <div id="emailHelp" className="form-text">
-                We'll never share your email with anyone else.
+    <div>
+      <Formik
+        initialValues={{
+          username: "",
+          email: "",
+          password: "",
+        }}
+        validationSchema={EditingCard}
+        onSubmit={(values) => {
+          console.log(values);
+          registration(values);
+        }}
+      >
+        {({ errors, touched, handleSubmit }) => (
+          <Form
+            className="Form d-flex justify-content-center m-5"
+            onSubmit={handleSubmit}
+          >
+            <div className="registrationForm d-flex flex-column m-5 gap-3">
+              <h3> Registration</h3>
+              <div className="mb-3">
+                <label htmlFor="username">Username</label>
+                <Field
+                  type="text"
+                  className="form-control"
+                  id="username"
+                  name="username"
+                  aria-describedby="username"
+                  placeholder="Username"
+                />
+                {touched.username && errors.username && (
+                  <div className="text-danger">{errors.username}</div>
+                )}
               </div>
-              {errors.email && touched.email && (
-                <div className="text-danger">{errors.email}</div>
-              )}
-            </div>
-            <div className="mb-3">
-              <label htmlFor="password">Password</label>
-              <Field
-                type="password"
-                className="form-control"
-                id="password"
-                name="password"
-                placeholder="Password"
-              />
-              {errors.password && touched.password && (
-                <div className="text-danger">{errors.password}</div>
-              )}
-            </div>
-            {/* <div className="mb-3 form-check">
+              <div className="mb-3">
+                <label htmlFor="email">Email</label>
+                <Field
+                  type="email"
+                  className="form-control"
+                  id="email"
+                  name="email"
+                  aria-describedby="emailHelp"
+                  placeholder="Email"
+                />
+                <div id="emailHelp" className="form-text">
+                  We'll never share your email with anyone else.
+                </div>
+                {errors.email && touched.email && (
+                  <div className="text-danger">{errors.email}</div>
+                )}
+              </div>
+              <div className="mb-3">
+                <label htmlFor="password">Password</label>
+                <Field
+                  type="password"
+                  className="form-control"
+                  id="password"
+                  name="password"
+                  placeholder="Password"
+                />
+                {errors.password && touched.password && (
+                  <div className="text-danger">{errors.password}</div>
+                )}
+              </div>
+              {/* <div className="mb-3 form-check">
             <input
               type="checkbox"
               className="form-check-input"
@@ -118,13 +119,19 @@ const Registration = () => {
               Remember me
             </label>
           </div> */}
-            <button type="submit" className="btn btn-primary">
-              Sign in
-            </button>
-          </div>
-        </Form>
-      )}
-    </Formik>
+              <button type="submit" className="btn btn-primary">
+                Sign in
+              </button>
+            </div>
+          </Form>
+        )}
+      </Formik>
+
+      {messageSignup ? (
+        <div className="signup_message">{messageSignup}</div>
+      ) : null}
+      {error ? <div>{error}</div> : null}
+    </div>
   );
 };
 export default Registration;
