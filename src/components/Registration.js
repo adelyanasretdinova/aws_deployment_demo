@@ -22,8 +22,8 @@ const Registration = () => {
         body: JSON.stringify(userInfo),
       });
       console.log("response from fetch", response);
-      if (response.status === 200) {
-        alert("you are registered");
+      if (response.status === 201) {
+        setMessageSignup(response.statusText);
       } else {
         let error = new Error(`${response.statusText}: ${response.url}`);
         error.status = response.status;
@@ -31,7 +31,7 @@ const Registration = () => {
       }
     } catch (error) {
       console.log("There was an error when signing up", error);
-      setError(error.message);
+      setError("There was an error when signing up");
     }
   };
 

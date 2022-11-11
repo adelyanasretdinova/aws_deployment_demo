@@ -10,7 +10,7 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 describe("Registration", () => {
-  test("renders the form", () => {
+  xtest("renders the form", () => {
     render(<Registration />);
     // elements are present using the lable
     const inputUserName = screen.getByLabelText(/username/i);
@@ -23,14 +23,7 @@ describe("Registration", () => {
     expect(button).toBeInTheDocument();
   });
 
-  test("displays text for ok login", async () => {
-    let pathRegistration = `${process.env.REACT_APP_WARDROBE_API}/users`;
-
-    server.use(
-      rest.post(pathRegistration, (req, res, ctx) => {
-        return res(ctx.status(500));
-      })
-    );
+  xtest("displays text Created for ok registration", async () => {
     render(<Registration />);
     // fill out form:
     await userEvent.type(screen.getByLabelText(/username/i), "Tester");
@@ -38,12 +31,12 @@ describe("Registration", () => {
     await userEvent.type(screen.getByLabelText(/email/i), "email@gmail.com");
     await userEvent.click(screen.getByRole("button"));
     // check if we see the text
-    expect(await screen.findByText("You are logged in!")).toBeInTheDocument();
+    expect(await screen.findByText("Created")).toBeInTheDocument();
   });
 
   test("displays error when signup does not work", async () => {
     // mock a 500 response
-    let pathSignup = `${process.env.REACT_APP_WARDROBE_API}/users/`;
+    let pathSignup = `${process.env.REACT_APP_WARDROBE_API}/users`;
     server.use(
       rest.post(pathSignup, (req, res, ctx) => {
         // body/json is optional for this test
@@ -56,7 +49,7 @@ describe("Registration", () => {
         );
       })
     );
-    render(<Signup />);
+    render(<Registration />);
     // fill out form:
     await userEvent.type(screen.getByLabelText(/username/i), "Tester");
     await userEvent.type(screen.getByLabelText(/email/i), "test@mail.com");
