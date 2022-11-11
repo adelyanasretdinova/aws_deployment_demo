@@ -30,7 +30,7 @@ const Registration = () => {
         throw error;
       }
     } catch (error) {
-      console.log("There was an error when updating data", error);
+      console.log("There was an error when signing up", error);
       setError(error.message);
     }
   };
@@ -65,7 +65,7 @@ const Registration = () => {
           <div className="registrationForm d-flex flex-column m-5 gap-3">
             <h3> Registration</h3>
             <div className="mb-3">
-            <label htmlFor="username">Username</label>
+              <label htmlFor="username">Username</label>
               <Field
                 type="text"
                 className="form-control"
@@ -79,7 +79,7 @@ const Registration = () => {
               )}
             </div>
             <div className="mb-3">
-            <label htmlFor="email">Email</label>
+              <label htmlFor="email">Email</label>
               <Field
                 type="email"
                 className="form-control"
@@ -96,7 +96,7 @@ const Registration = () => {
               )}
             </div>
             <div className="mb-3">
-            <label htmlFor="password">Password</label>
+              <label htmlFor="password">Password</label>
               <Field
                 type="password"
                 className="form-control"

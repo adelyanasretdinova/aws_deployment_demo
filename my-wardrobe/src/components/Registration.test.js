@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 
 import Registration from "./Registration";
 import { server } from "../mocks/server.js";
+import { rest } from "msw";
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
@@ -24,7 +25,14 @@ describe("Registration", () => {
     expect(button).toBeInTheDocument();
   });
   test("displays text for ok login", async () => {
-    render(<Registration setLoggedIn={setRegisteredIn} />);
+    let pathRegistration = `${process.env.REACT_APP_WARDROBE_API}/users`;
+
+    server.use(
+      rest.post(pathRegistration, (req, res, ctx) => {
+        return res(ctx.status(500));
+      })
+    );
+    render(<Registration />);
     // fill out form:
     await userEvent.type(screen.getByLabelText(/username/i), "Tester");
     await userEvent.type(screen.getByLabelText(/password/i), "ABC123abc!");
@@ -32,5 +40,16 @@ describe("Registration", () => {
     await userEvent.click(screen.getByRole("button"));
     // check if we see the text
     expect(await screen.findByText("You are logged in!")).toBeInTheDocument();
+  });
+
+  test("displays error when signup doestn work", async () => {
+    render(<Registration />);
+    // fill out form:
+    await userEvent.type(screen.getByLabelText(/username/i), "Tester");
+    await userEvent.type(screen.getByLabelText(/password/i), "ABC123abc!");
+    await userEvent.type(screen.getByLabelText(/email/i), "email@gmail.com");
+    await userEvent.click(screen.getByRole("button"));
+    // check if we see the text
+    expect(await screen.findByText("Created")).toBeInTheDocument();
   });
 });
