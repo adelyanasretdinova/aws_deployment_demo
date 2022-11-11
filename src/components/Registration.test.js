@@ -58,7 +58,7 @@ describe("Registration", () => {
     // check if we see the text
 
     expect(
-      await screen.findByText("There was an error signing up")
+      await screen.findByText("There was an error when signing up")
     ).toBeInTheDocument();
     expect(screen.queryByText("Created")).not.toBeInTheDocument();
   });

@@ -17,5 +17,8 @@ test("display a signup page for a not logged in user", async ({ page }) => {
   await expect(page.locator(".sign_message")).toHaveText("Created");
 
   // loging created
+
+  await expect(page.locator(".login")).toHaveText("Log in");
+  const logLink = page.get;
   //navigate to main page
 });
