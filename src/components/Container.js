@@ -3,8 +3,6 @@ import Wardrobe from "./Wardrobe";
 import Outfit from "./Outfit";
 import Weather from "./Weather";
 import SeasonButtons from "./SeasonButtons";
-let tokenFromLS = localStorage.getItem("token");
-let JWT_TOKEN = JSON.parse(tokenFromLS);
 
 const Container = (props) => {
   const [wardrobe, setWardrobe] = useState([]);
@@ -16,10 +14,13 @@ const Container = (props) => {
 
   const fetchWardrobe = async () => {
     try {
+      let tokenJson = localStorage.getItem("token");
+      let JWT_TOKEN = JSON.parse(tokenJson);
       let path = `${process.env.REACT_APP_WARDROBE_API}/wardrobe`;
-      let response = await fetch(path, { mode: "cors" });
-      // check status
-      // if 200
+      let response = await fetch(path, {
+        mode: "cors",
+        headers: { Authorization: `Bearer ${JWT_TOKEN}` },
+      });
       if (response.status === 200) {
         let fetchedWardrobeData = await response.json();
         let dataToStore = fetchedWardrobeData.data.map((item) => ({
@@ -32,7 +33,7 @@ const Container = (props) => {
       } else {
         // deal with error
         throw new Error(`Sorry, could not find any data`);
-        throw new Error(`Could not find: ${response.url}`);
+        // throw new Error(`Could not find: ${response.url}`);
       }
     } catch (error) {
       console.log("Something went wrong fetching data", error.message);
@@ -184,6 +185,8 @@ const Container = (props) => {
 
     // update to db:
     try {
+      let tokenJson = localStorage.getItem("token");
+      let JWT_TOKEN = JSON.parse(tokenJson);
       let path = `${process.env.REACT_APP_WARDROBE_API}/wardrobe/${updatedItemInState.id}`;
       let response = await fetch(path, {
         method: "PUT",

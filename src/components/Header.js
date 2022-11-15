@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-const Header = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
+const Header = (props) => {
   return (
     <header>
       <h1> Welcome to my online wardrobe!</h1>
@@ -18,7 +17,7 @@ const Header = () => {
               Main page wardrobe
             </Link>
           </li>
-          {loggedIn ? (
+          {props.isloggedIn ? (
             <li className="nav-item">
               <Link to="/newItem" className="nav-link">
                 Create new item

@@ -105,7 +105,7 @@ const NewItem = () => {
       <Button variant="primary" onClick={handleShow}>
         Add new Item to your wardrobe
       </Button>
-
+      {error ? <h2>{error}</h2> : null}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Let's add a new item to your wardrobe</Modal.Title>
