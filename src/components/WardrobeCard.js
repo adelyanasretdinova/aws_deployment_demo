@@ -87,10 +87,16 @@ const WardrobeCard = (props) => {
                   changedUrl = true;
                 }
                 props.updateWardrobe(values, props.item.id, changedUrl);
-                handleClose();
+                props.handleClose();
               }}
             >
-              {({ errors, touched, setFieldValue, handleSubmit }) => (
+              {({
+                errors,
+                touched,
+                setFieldValue,
+                handleSubmit,
+                handleClose,
+              }) => (
                 <Modal.Body>
                   <Form onSubmit={handleSubmit}>
                     <label htmlFor="descrshort"> Title of item </label>
@@ -170,7 +176,7 @@ const WardrobeCard = (props) => {
                     ) : null}
                     {/* </div> */}
                     <Modal.Footer>
-                      <Button variant="secondary" onClick={handleClose}>
+                      <Button variant="secondary" onClick={props.handleClose}>
                         Close
                       </Button>
                       <Button variant="primary" type="submit">

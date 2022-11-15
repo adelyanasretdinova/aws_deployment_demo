@@ -43,8 +43,8 @@ const NewItem = () => {
   const uploadImageToCloudinary = async (item) => {
     console.log("upload image start");
     // setup
-    let preset = "wardrobe_beam";
-    let cloudName = "ddebnabwu";
+    let preset = `${process.env.REACT_APP_CLOUDINARY_PRESET}`;
+    let cloudName = `${process.env.REACT_APP_CLOUDINARY_CLOUDNAME}`;
     let cloudPath = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
     // create body to post:
     let dataForBody = new FormData();

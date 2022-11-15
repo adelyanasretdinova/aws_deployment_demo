@@ -57,9 +57,9 @@ const Login = (props) => {
         <Form className="Form d-flex flex-column m-5">
           <h3> Log in </h3>
           <div className="d-flex flex-column m-5 gap-3">
-          <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email</label>
             <Field
-              id= "email"
+              id="email"
               name="email"
               type="email"
               placeholder="Email"
@@ -68,7 +68,7 @@ const Login = (props) => {
             <ErrorMessage name="email" />
             <label htmlFor="password">Password</label>
             <Field
-              id = "password"
+              id="password"
               name="password"
               type="password"
               placeholder="Password"
@@ -85,7 +85,7 @@ const Login = (props) => {
           </div>
         </Form>
       </Formik>
-      {message ? <div className="login_message">{messageSignup}</div>>{message}</div> : null}
+      {message ? <div className="login_message">{message}</div> : null}
       {error ? <div>{error.message}</div> : null}
     </div>
   );

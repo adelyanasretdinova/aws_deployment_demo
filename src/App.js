@@ -9,24 +9,14 @@ import Login from "./components/Login";
 import { useState } from "react";
 
 const App = () => {
-  // vanillaJS
-  function isJSON(str) {
-    try {
-      return JSON.parse(str) && !!str;
-    } catch (e) {
-      localStorage.removeItem("token");
-      return false;
-    }
-  }
-  const token = localStorage.getItem("token");
-  const [loggedIn, setLoggedIn] = useState(token && isJSON(token));
+  const [loggedIn, setLoggedIn] = useState(false);
   return (
     <BrowserRouter>
       <div className="App">
-        <Header />
+        <Header isLoggedIn={loggedIn} />
         <Routes>
           {loggedIn ? (
-            <Route path="/" element={<Container setLoggedIn={setLoggedIn} />} />
+            <Route path="/" element={<Container />} />
           ) : (
             <Route path="/" element={<Navigate to="/registration" replace />} />
           )}
@@ -38,10 +28,14 @@ const App = () => {
               </div>
             }
           />
-          <Route
-            path="/newItem"
-            element={<NewItem setLoggedIn={setLoggedIn} />}
-          />
+          {loggedIn ? (
+            <Route path="/newItem" element={<NewItem />} />
+          ) : (
+            <Route
+              path="/newItem"
+              element={<Navigate to="/registration" replace />}
+            />
+          )}
           <Route path="*" element={<div> Page not found</div>} />
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
           <Route path="/registration" element={<Registration />} />
